@@ -32,12 +32,53 @@ int solveRecursively(vector<int>& arr, int idx, int len, vector<vector<int>>& dp
     return dp[idx][len] = max(pick, skip);
 }
 
+int solveTabulation(vector<int>& arr, int n, int len) {
+    vector<vector<int>> dp(n, vector<int>(len+1, 0));
+    
+    for(int i = 1; i<=len; i++) {
+        dp[0][i] = arr[0]*i;
+    }
+
+    for(int i = 1; i<n; i++) {
+        for(int j = 1; j<=len; j++) {
+            int pick = 0;
+            if(i+1 <= j) {
+                pick = arr[i] + dp[i][j-(i+1)];
+            }
+            int skip = dp[i-1][j];
+            dp[i][j] = max(pick, skip);
+        }
+    }
+    return dp[n-1][len];
+}
+
+int solveSpaceOptimized(vector<int>& arr, int n, int len) {
+    vector<int> prev(len+1, 0);
+    for(int i = 1; i<n; i++) {
+        prev[i] = i*arr[0];
+    }
+
+    for(int i = 1; i<n; i++) {
+        vector<int> cur(len+1, 0);
+        for(int j = 1; j<=len; j++) {
+            int pick = 0;
+            if(i+1 <= j) {
+                pick = arr[i] + cur[j-(i+1)];
+            }
+            int skip = prev[j];
+            cur[j] = max(pick, skip);
+        }
+        prev = cur;
+    }
+    return prev[len];
+}
+
 int findMaxValForRodLen(vector<int>& arr, int n, int len) {
     // idx -> Pick it or Skip it -> this will create the recursive tree -> we do find overlapping 
     // subproblem -> we can memoize that 
     vector<vector<int>> dp(n, vector<int>(len+1, -1));
     int maxVal = solveRecursively(arr, n-1, len, dp);
-    return maxVal;
+    return solveSpaceOptimized(arr, n, len);
 }
 
 int main() {
