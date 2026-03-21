@@ -34,19 +34,30 @@ int findLCSubstringRecursively(string& str1, string& str2, int i, int j, int cnt
     return max(findLCSubstringRecursively(str1, str2, i-1, j, 0), findLCSubstringRecursively(str1, str2, i, j-1, 0));
 }
 
+// ! Since dp[i][j] = length of common substring ENDING at str1[i-1], the substring's
+// ! start is always (endIdx - maxLen) in 0-based. So just track where maxLen last
+// ! updated (endIdx = i), and substr() does the rest - no dp backtracking needed.
 int findLCSTab(string& str1, string& str2, int n, int m) {
     vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
     int maxLen = 0;
+    int endIdx = 0;
+
     for(int i = 1; i<=n; i++) {
         for(int j = 1; j<=m; j++) {
             if(str1[i-1] == str2[j-1]) {
                 dp[i][j] = 1 + dp[i-1][j-1];
-                maxLen = max(maxLen, dp[i][j]);
+                if(maxLen < dp[i][j]) {
+                    maxLen = dp[i][j];
+                    endIdx = i;
+                }
+
             } else {
                 dp[i][j] = 0;
             }
         }
     }
+    // ! substring ends at endIdx-1 (0-based) with length maxLen
+    cout<<str1.substr(endIdx - maxLen, maxLen)<<endl;
 
     return maxLen;
 }
