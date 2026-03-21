@@ -1,0 +1,1 @@
+{"name":"Local: 02-print-lcs","url":"f:\\cpp_programs\\learning-log\\dp\\strings\\02-print-lcs.cpp","tests":[{"id":1774074987836,"input":"abcde\nbdgek","output":"bde"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\cpp_programs\\learning-log\\dp\\strings\\02-print-lcs.cpp","group":"local","local":true}

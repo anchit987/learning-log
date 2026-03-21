@@ -1,0 +1,1 @@
+{"name":"Local: 03-longest-common-substring","url":"f:\\cpp_programs\\learning-log\\dp\\strings\\03-longest-common-substring.cpp","tests":[{"id":1774077596617,"input":"abcd\nabzd","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\cpp_programs\\learning-log\\dp\\strings\\03-longest-common-substring.cpp","group":"local","local":true}
